@@ -50,10 +50,9 @@
     /* ---------- AÇILIŞ (HERO) ---------- */
     // Sırayla dönen başlıklar. Her başlık iki satırdır; satırları kısa tutun (en çok ~14 harf).
     headlines: [
-      ["ÖNCESİ,",       "SONRASI"],
       ["YAŞAM ALANINA", "DEĞER KATARIZ"],
+      ["TASARIMDAN",    "ANAHTARA"],
       ["ESKİ DÜKKÂN,",  "YENİ ATÖLYE"],
-      ["ANAHTARI",      "BİZE VERİN"],
       ["GAZİANTEP'TE",  "İÇ MEKÂN"]
     ],
     // Video yolu (ör. "images/tanitim.mp4"). Boşsa aşağıdaki fotoğraf slaytı çalışır.
