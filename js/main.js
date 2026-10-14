@@ -346,18 +346,18 @@
   function baHomeHTML() {
     if (!BA_PAIRS.length) return "";
     return '<section class="ba t-dark" data-theme="dark" id="oncesi-sonrasi">' +
-      '<div class="ba-head"><div><p class="label mute rv">' + esc(BA.label || "Öncesi / Sonrası") + '</p>' +
-        '<h2 class="ba-title rv">' + rich(BA.title || "") + "</h2></div>" +
+      '<div class="sec-head rv"><p class="label">' + esc(BA.label || "Öncesi / Sonrası") + '</p><span class="label mute">' + pad2(BA_PAIRS.length) + "</span></div>" +
+      '<div class="ba-head"><h2 class="ba-title rv">' + rich(BA.title || "") + "</h2>" +
         '<p class="ba-lead rv">' + esc(BA.text || "") + "</p></div>" +
-      '<div class="ba-tabs rv" role="tablist" aria-label="' + esc(BA.label || "Öncesi / Sonrası") + '">' +
+      '<div class="chips ba-tabs rv" role="group" aria-label="' + esc(BA.label || "Öncesi / Sonrası") + '">' +
         BA_PAIRS.map(function (p, i) {
-          return '<button class="ba-tab" type="button" role="tab" data-ba="' + i + '" aria-selected="' + (i === 0) + '">' + esc(p.tab || p.title) + "</button>";
+          return '<button class="chip" type="button" data-ba="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(p.tab || p.title) + "</button>";
         }).join("") +
       "</div>" +
       '<div class="ba-stage rv" data-ba-stage>' + cmpHTML(BA_PAIRS[0], false) + "</div>" +
       '<div class="ba-cap"><div data-ba-cap>' + baCapHTML(BA_PAIRS[0]) + "</div>" +
         '<a class="btn" href="oncesi-sonrasi.html">' + esc(BA.allLabel || "Tüm dönüşümler") + " <i>→</i></a></div>" +
-      '<p class="ba-hint">← ' + esc(BA.hint || "Çizgiyi sürükleyin") + " →</p>" +
+      '<p class="label mute ba-hint">← ' + esc(BA.hint || "Çizgiyi sürükleyin") + " →</p>" +
     "</section>";
   }
   function renderBAPage() {
@@ -366,9 +366,11 @@
         cmpHTML(p, i === 0) + '<div class="ba-cap"><div>' + baCapHTML(p) + "</div></div></div>";
     }).join("");
     main.innerHTML = '<section class="ba bapage t-dark" data-theme="dark">' +
-      '<div class="ba-head"><div><p class="label mute rv">' + esc(BRAND) + '</p>' +
-        '<h1 class="ba-title rv">' + rich(BA.pageTitle || BA.title || "") + "</h1></div>" +
-        '<p class="ba-lead rv">' + esc(BA.text || "") + "</p></div>" +
+      '<div class="phead">' +
+        '<div class="phead-row rv"><p class="label">' + esc(BRAND) + '</p><p class="label mute">' + pad2(BA_PAIRS.length) + "</p></div>" +
+        '<h1 class="phead-title mkw"><span class="mk"><span>' + esc(BL) + '</span></span><span class="mk"><span>' + esc(AL) + "</span></span></h1>" +
+      "</div>" +
+      '<p class="ba-lead ba-lead-page rv">' + esc(BA.text || "") + "</p>" +
       (items || '<p class="ba-lead">Henüz karşılaştırma eklenmedi.</p>') +
       '<div class="ba-cta rv"><p>' + esc(BA.cta || "Sizin mekânınızın öncesi ve sonrası da böyle görünsün.") + "</p>" +
         '<a class="btn" href="studyo.html#iletisim">' + esc(L.contact) + " <i>→</i></a></div>" +
@@ -443,11 +445,11 @@
     // Ana sayfadaki sekmeler
     var stage = $("[data-ba-stage]"), capEl = $("[data-ba-cap]");
     if (stage) {
-      $$(".ba-tab").forEach(function (b) {
+      $$("[data-ba]").forEach(function (b) {
         b.addEventListener("click", function () {
           var i = parseInt(b.getAttribute("data-ba"), 10), p = BA_PAIRS[i];
           if (!p) return;
-          $$(".ba-tab").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
+          $$("[data-ba]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
           stage.innerHTML = cmpHTML(p, true);
           if (capEl) capEl.innerHTML = baCapHTML(p);
           var c = $(".cmp", stage); setCmp(c, 50); sweep(c);
